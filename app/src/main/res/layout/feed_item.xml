@@ -15,9 +15,10 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:padding="16dp"
-            android:src="@drawable/egg_0"/>
+            android:src="@drawable/egg_0" />
 
         <TextView
+            android:id="@+id/title_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -27,6 +28,7 @@
             android:textColor="@android:color/black" />
 
         <ImageView
+            android:id="@+id/more_img"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:background="?selectableItemBackgroundBorderless"
@@ -40,12 +42,28 @@
         android:layout_height="1px"
         android:background="@color/gray_light" />
 
-    <ImageView
-        android:id="@+id/item_img"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/egg_0" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/item_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/egg_0" />
+
+        <ImageView
+            android:id="@+id/middle_like_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerInParent="true"
+            android:elevation="2dp"
+            android:src="@drawable/ic_favorite_white"
+            android:alpha="0" />
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,7 +76,7 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:padding="16dp"
-            android:src="@drawable/ic_favorite"/>
+            android:src="@drawable/ic_favorite" />
 
         <TextView
             android:id="@+id/item_like_count_txt"
@@ -74,12 +92,11 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/likes"
             android:singleLine="true"
+            android:text="@string/likes"
             android:textColor="@android:color/black" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

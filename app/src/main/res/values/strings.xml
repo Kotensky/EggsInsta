@@ -2,4 +2,10 @@
     <string name="app_name">Egg\'s Insta</string>
     <string name="world_record_egg">world_record_egg</string>
     <string name="likes">likes</string>
+    <string name="hello">Hello there!</string>
+    <string name="general">General Kenobi!</string>
+    <string name="share">Share</string>
+    <string name="statistic">Statistic</string>
+    <string name="reset_app_data">Reset app data</string>
+    <string name="rate_app">Rate app</string>
 </resources>
