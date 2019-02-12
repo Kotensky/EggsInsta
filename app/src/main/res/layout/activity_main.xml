@@ -7,7 +7,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@android:color/white"
         android:theme="@style/AppTheme"
         app:elevation="0dp">
 
@@ -28,18 +28,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/main_swipe_refresh"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
