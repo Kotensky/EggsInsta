@@ -1,15 +1,17 @@
 package com.kotensky.eggsinsta
 
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.more_dialog.*
-import android.content.Intent
-import android.net.Uri
+import kotlinx.android.synthetic.main.more_dialog.view.*
+import java.math.BigInteger
 
 
 class MainActivity : AppCompatActivity(), FeedAdapter.OnFeedClickListener {
@@ -37,21 +39,39 @@ class MainActivity : AppCompatActivity(), FeedAdapter.OnFeedClickListener {
         main_rv.adapter = adapter
         main_rv.layoutManager = layoutManager
         main_rv.post {
-            main_rv?.scrollToPosition(prefs.getInt(CURRENT_POSITION_KEY, adapter.itemCount / 2))
+            val scrollPosition = prefs.getInt(CURRENT_POSITION_KEY, adapter.itemCount / 2)
+            main_rv?.scrollToPosition(scrollPosition)
         }
-
-        setupMoreDialog()
     }
 
-    private fun setupMoreDialog(){
+    private fun createMoreDialog() {
         val appPackageName = packageName
 
         val dialogView = layoutInflater.inflate(R.layout.more_dialog, null)
+
+        dialogView?.statistic_value_txt?.text =
+                getString(
+                    R.string.statistic_value_tmp,
+                    100 - 100 * likedIds.size / adapter.itemCount.toFloat()
+                )
+
+
+        dialogView?.scroll_to_container?.setOnClickListener {
+            moreDialog?.dismiss()
+
+            showScrollToPositionDialog() // todo show after adv
+        }
+
         dialogView?.rate_app_txt?.setOnClickListener {
             try {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
             } catch (anfe: android.content.ActivityNotFoundException) {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    )
+                )
             }
             moreDialog?.dismiss()
         }
@@ -72,11 +92,57 @@ class MainActivity : AppCompatActivity(), FeedAdapter.OnFeedClickListener {
             moreDialog?.dismiss()
         }
 
+        dialogView?.reset_app_txt?.setOnClickListener {
+            moreDialog?.dismiss()
+            showResetAppDataDialog()
+        }
+
+
         val builder = AlertDialog.Builder(this)
         builder.setView(dialogView)
         moreDialog = builder.create()
     }
 
+    private fun showScrollToPositionDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.scroll_to_dialog, null)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
+            dialog.dismiss()
+            val positionBigInt =
+                (dialog as AlertDialog).findViewById<EditText>(R.id.scroll_to_edt)?.text?.toString()
+                    ?.toBigIntegerOrNull()
+            if (positionBigInt != null) {
+                val position = when {
+                    positionBigInt < BigInteger.valueOf(1) -> 1
+                    positionBigInt >= BigInteger.valueOf((adapter.itemCount - 2).toLong()) -> adapter.itemCount - 3
+                    else -> positionBigInt.toInt()
+                }
+                main_rv.scrollToPosition(position)
+            }
+        }
+        builder.setNegativeButton(getString(R.string.cancel)) { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.create().show()
+    }
+
+
+    private fun showResetAppDataDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(getString(R.string.reset_app_data_dialog_message))
+        builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
+            val editor = prefs.edit()
+            editor.clear()
+            editor.apply()
+            dialog.dismiss()
+        }
+        builder.setNegativeButton(getString(R.string.cancel)) { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.create().show()
+    }
 
 
     private fun stringToIds(string: String?): ArrayList<Int> {
@@ -132,6 +198,7 @@ class MainActivity : AppCompatActivity(), FeedAdapter.OnFeedClickListener {
     }
 
     override fun onMoreClick(position: Int) {
+        createMoreDialog()
         moreDialog?.show()
     }
 

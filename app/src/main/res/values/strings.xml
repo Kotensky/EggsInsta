@@ -1,11 +1,21 @@
 <resources>
     <string name="app_name">Egg\'s Insta</string>
-    <string name="world_record_egg">world_record_egg</string>
+    <string name="world_record_egg">wоrld_rесоrd_еgg</string>
     <string name="likes">likes</string>
     <string name="hello">Hello there!</string>
-    <string name="general">General Kenobi!</string>
+    <string name="general">General Kеnоbi!</string>
     <string name="share">Share</string>
-    <string name="statistic">Statistic</string>
+    <string name="scroll_to">Scroll to position</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="statistic">Statistic:</string>
     <string name="reset_app_data">Reset app data</string>
     <string name="rate_app">Rate app</string>
+    <string name="adv">adv</string>
+    <string name="statistic_value_tmp">Unliked posts: %.2f%%</string>
+    <string name="soon">soon</string>
+    <string name="reset_app_data_dialog_message">Are you sure you want to reset app data?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="position">Enter position</string>
 </resources>
